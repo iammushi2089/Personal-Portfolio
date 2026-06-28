@@ -1,0 +1,43 @@
+/* --- TAILWIND INITIALIZATION --- */
+/* Use this line if you are using Tailwind v4 (The new standard): */
+@import "tailwindcss";
+
+/* OR, use these three lines if you rolled back to Tailwind v3: */
+/*
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*/
+
+/* --- GLOBAL STYLES & CUSTOM ANIMATIONS --- */
+html {
+  /* This enables native smooth scrolling when clicking anchor links */
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc; /* Matches Tailwind's slate-50 */
+  color: #0f172a; /* Matches Tailwind's slate-900 */
+}
+
+/* A custom fade-in animation to give the page a polished feel */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
