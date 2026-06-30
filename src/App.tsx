@@ -1,15 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import ContactModal from './ContactModal'
 
 // ── Asset imports ─────────────────────────────────────────
-import profilePic from './assets/profile_picture_cat.png'
+import reverseCatVideo from './assets/reverse_cat_shade.mp4'
 import verifiedCheckmark from './assets/verified_badge.png'
-import mailIcon from './assets/mail.png'
+import mailWhiteIcon from './assets/mail-white.png'
+import mailDarkIcon from './assets/mail-dark.png'
 import locationIcon from './assets/location.png'
 import aboutIcon from './assets/about.png'
 import jobExperienceIcon from './assets/job_experience.png'
 import techStackIcon from './assets/tech_stack.png'
 import downIcon from './assets/down.png'
+import downDarkIcon from './assets/down-dark.png'
+import catLightVideo from './assets/cat_light_mode.mp4'
 
 // ── Project screenshots ───────────────────────────────────
 import travelToursImg from './assets/travel_tours.png'
@@ -59,6 +63,7 @@ interface Project {
   tags: string[]
   images: string[]
   accent: string
+  link?: string
 }
 
 const projects: Project[] = [
@@ -69,6 +74,7 @@ const projects: Project[] = [
     tags: ['React', 'TypeScript', 'Supabase'],
     images: [travelToursImg],
     accent: '#e8a44a',
+    link: 'https://amazing8.netlify.app/',
   },
   {
     title: 'The-Folio Project',
@@ -127,9 +133,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     return () => clearInterval(id)
   }, [project.images.length])
 
+  const CardWrapper = project.link ? 'a' : 'div'
+  const cardProps = project.link
+    ? { href: project.link, target: '_blank', rel: 'noopener noreferrer' }
+    : {}
+
   return (
-    <div
-      className={`project-card project-card--${index % 2 === 0 ? 'even' : 'odd'}`}
+    <CardWrapper
+      {...(cardProps as any)}
+      className={`project-card project-card--${index % 2 === 0 ? 'even' : 'odd'}${project.link ? ' project-card--link' : ''}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{ '--accent': project.accent } as React.CSSProperties}
@@ -161,7 +173,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       {/* Accent bar */}
       <div className="project-card__accent-bar" />
-    </div>
+    </CardWrapper>
   )
 }
 
@@ -170,12 +182,35 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 // ═════════════════════════════════════════════════════════
 export default function App() {
   const [dark, setDark] = useState(false)
+  const [toggleCount, setToggleCount] = useState(0)
   const projectsRef = useRef<HTMLElement>(null)
+  const lightVideoRef = useRef<HTMLVideoElement>(null)  // new_cat_shade.mp4 (light mode)
+  const darkVideoRef  = useRef<HTMLVideoElement>(null)  // reverse_cat_shade.mp4 (dark mode)
 
   // Apply dark class to <html>
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
   }, [dark])
+
+  // Play the appropriate video on every toggle (skip mount)
+  useEffect(() => {
+    if (toggleCount === 0) return
+    if (!dark && lightVideoRef.current) {
+      // Switched to LIGHT → play light video from start
+      lightVideoRef.current.currentTime = 0
+      lightVideoRef.current.play()
+    }
+    if (dark && darkVideoRef.current) {
+      // Switched to DARK → play dark video from start
+      darkVideoRef.current.currentTime = 0
+      darkVideoRef.current.play()
+    }
+  }, [dark, toggleCount])
+
+  const handleToggle = () => {
+    setDark(d => !d)
+    setToggleCount(c => c + 1)
+  }
 
   const scrollToProjects = () => {
     projectsRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -186,7 +221,7 @@ export default function App() {
 
       {/* ── Dark mode toggle ─────────────────────────────── */}
       <div className="toggle-wrap">
-        <DarkModeToggle dark={dark} onToggle={() => setDark(d => !d)} />
+        <DarkModeToggle dark={dark} onToggle={handleToggle} />
       </div>
 
       {/* ═══════════════════════════════════════════════════
@@ -194,9 +229,26 @@ export default function App() {
       ═══════════════════════════════════════════════════ */}
       <section className="hero-section">
         <div className="hero-inner">
-          {/* Profile picture */}
+          {/* Profile – layered crossfade: two videos stacked, opacity transitions */}
           <div className="profile-img-wrap">
-            <img src={profilePic} alt="Jhon Rey" className="profile-img" />
+            {/* Light mode: cat_light_mode.mp4 */}
+            <video
+              ref={lightVideoRef}
+              className={`profile-media profile-media--video ${!dark ? 'profile-media--active' : ''}`}
+              src={catLightVideo}
+              muted
+              playsInline
+              onEnded={e => { e.currentTarget.pause() }}
+            />
+            {/* Dark mode: reverse_cat_shade.mp4 */}
+            <video
+              ref={darkVideoRef}
+              className={`profile-media profile-media--video ${dark ? 'profile-media--active' : ''}`}
+              src={reverseCatVideo}
+              muted
+              playsInline
+              onEnded={e => { e.currentTarget.pause() }}
+            />
           </div>
 
           {/* Info */}
@@ -216,7 +268,7 @@ export default function App() {
               className="send-email-btn"
               aria-label="Send Email"
             >
-              <img src={mailIcon} alt="" className="btn-icon" />
+              <img src={dark ? mailDarkIcon : mailWhiteIcon} alt="" className="btn-icon" />
               Send Email
             </a>
           </div>
@@ -321,7 +373,7 @@ export default function App() {
       <div className="view-more-wrap">
         <button className="view-more-btn" onClick={scrollToProjects}>
           View More
-          <img src={downIcon} alt="" className="down-icon" />
+          <img src={dark ? downDarkIcon : downIcon} alt="" className="down-icon" />
         </button>
       </div>
 
@@ -340,6 +392,9 @@ export default function App() {
           ))}
         </div>
       </section>
+
+      {/* ── Contact Modal (floating button + modal panel) ── */}
+      <ContactModal />
 
     </div>
   )

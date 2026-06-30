@@ -5,10 +5,10 @@
   position: relative;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 16px 24px 60px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 14px;
 }
 
 /* =============================================
@@ -16,8 +16,8 @@
    ============================================= */
 .toggle-wrap {
   position: fixed;
-  top: 28px;
-  right: 32px;
+  top: 16px;
+  right: 24px;
   z-index: 999;
 }
 
@@ -55,7 +55,7 @@
 .hero-section {
   display: flex;
   justify-content: flex-start;
-  padding: 20px 0 10px;
+  padding: 8px 0 4px;
 }
 
 .hero-inner {
@@ -66,26 +66,36 @@
 
 .profile-img-wrap {
   flex-shrink: 0;
-  width: 160px;
-  height: 170px;
+  width: 130px;
+  height: 140px;
   border-radius: 16px;
   overflow: hidden;
   border: 2px solid var(--border);
   background: var(--bg-card);
+  position: relative; /* needed for stacking */
 }
 
-.profile-img {
+/* Both media elements are always in DOM, stacked */
+.profile-media {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
   display: block;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.profile-media--active {
+  opacity: 1;
 }
 
 .hero-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .hero-name-row {
@@ -95,7 +105,7 @@
 }
 
 .hero-name {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 700;
   letter-spacing: -0.5px;
   color: var(--text-primary);
@@ -106,7 +116,7 @@
   width: 26px;
   height: 26px;
   object-fit: contain;
-  filter: var(--icon-filter);
+  /* always retain natural colour – no filter */
 }
 
 .hero-location {
@@ -138,12 +148,12 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
-  padding: 10px 20px;
+  margin-top: 6px;
+  padding: 8px 18px;
   border-radius: 999px;
   background: var(--btn-bg);
   color: var(--btn-text);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
   text-decoration: none;
@@ -162,11 +172,8 @@
   width: 16px;
   height: 16px;
   object-fit: contain;
-  filter: invert(1) brightness(10);
-}
-
-:root.dark .btn-icon {
-  filter: invert(0);
+  /* No filter needed: mail-white.png (light) and mail-dark.png (dark)
+     are already the correct colours for their respective button backgrounds */
 }
 
 /* =============================================
@@ -195,11 +202,11 @@
 .card {
   background: var(--bg-card);
   border-radius: 16px;
-  padding: 24px;
+  padding: 16px 20px;
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
@@ -230,12 +237,20 @@
 .about-text {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  padding-right: 4px;
 }
 
+.about-text::-webkit-scrollbar { width: 3px; }
+.about-text::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
 .about-text p {
-  font-size: 13.5px;
-  line-height: 1.7;
+  font-size: 12.5px;
+  line-height: 1.55;
   color: var(--text-secondary);
 }
 
@@ -278,8 +293,16 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  padding-right: 4px;
 }
+
+.experience-list::-webkit-scrollbar { width: 3px; }
+.experience-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 .experience-item {
   display: flex;
@@ -298,16 +321,16 @@
 }
 
 .exp-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
 .exp-desc {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* =============================================
@@ -316,7 +339,7 @@
 .view-more-wrap {
   display: flex;
   justify-content: center;
-  padding: 16px 0;
+  padding: 6px 0;
 }
 
 .view-more-btn {
@@ -324,11 +347,11 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 14px 40px 10px;
+  padding: 10px 32px 8px;
   border-radius: 999px;
   background: var(--btn-bg);
   color: var(--btn-text);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
   border: none;
@@ -345,11 +368,6 @@
   width: 14px;
   height: 14px;
   object-fit: contain;
-  filter: invert(1) brightness(10);
-}
-
-:root.dark .down-icon {
-  filter: invert(0);
 }
 
 /* =============================================
@@ -514,6 +532,14 @@
 
 .project-card:hover .project-card__accent-bar {
   transform: scaleX(1);
+}
+
+/* Link-style project cards */
+.project-card--link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: grid;
 }
 
 /* =============================================

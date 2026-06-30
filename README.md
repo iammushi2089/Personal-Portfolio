@@ -1,10 +1,10 @@
-# Jhon Rey – Personal Portfolio
+# Jhon Rey � Personal Portfolio
 
-A responsive, single-page personal portfolio website built with **React + TypeScript + Vite**. Features a dark/light mode toggle, smooth scroll navigation, and an alternating project showcase with auto-cycling images.
+A responsive, single-page personal portfolio website built with **React + TypeScript + Vite**. Features a light/dark mode toggle with smooth crossfade animations, video profile media, an integrated EmailJS contact form with reCAPTCHA, and an alternating project showcase.
 
 ---
 
-## 🚀 Tech Stack
+## ?? Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -13,53 +13,62 @@ A responsive, single-page personal portfolio website built with **React + TypeSc
 | Bundler | [Vite 8](https://vite.dev/) |
 | Styling | Vanilla CSS (custom properties / CSS variables) |
 | Font | [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts |
-| Icons | Custom PNG assets + inline SVG favicon |
+| Email | [EmailJS](https://www.emailjs.com/) |
+| CAPTCHA | [Google reCAPTCHA v2](https://www.google.com/recaptcha/) |
 | Linting | ESLint + typescript-eslint + eslint-plugin-react-hooks |
 
-> No external UI library or CSS framework is used — everything is hand-crafted with CSS variables for theme switching.
+> No external UI library or CSS framework is used � everything is hand-crafted with CSS variables for theme switching.
 
 ---
 
-## 📁 Project Structure
+## ?? Project Structure
 
 ```
 my_personal_portfolio/
-├── public/
-│   ├── favicon.svg          # Browser tab icon
-│   └── icons.svg            # SVG sprite (reserved for future use)
-├── src/
-│   ├── assets/              # All image assets
-│   │   ├── profile_picture_cat.png
-│   │   ├── verified_badge.png
-│   │   ├── mail.png
-│   │   ├── location.png
-│   │   ├── about.png
-│   │   ├── job_experience.png
-│   │   ├── tech_stack.png
-│   │   ├── down.png
-│   │   ├── travel_tours.png
-│   │   ├── the_folio.png
-│   │   ├── bias.png
-│   │   ├── magic_leftovers1.png
-│   │   └── magic_leftovers2.png
-│   ├── App.tsx              # Main component + all section markup
-│   ├── App.css              # Component-level styles
-│   ├── index.css            # Global reset, CSS tokens, dark mode vars
-│   └── main.tsx             # React entry point
-├── index.html               # HTML shell + Google Fonts link
-├── vite.config.ts           # Vite config
-├── tsconfig.json            # TypeScript config root
-├── tsconfig.app.json        # App-specific TS settings
-├── tsconfig.node.json       # Node/Vite TS settings
-├── eslint.config.js         # ESLint flat config
-└── package.json
++-- public/
+�   +-- favicon.svg              # Browser tab icon
+�   +-- icons.svg                # SVG sprite (reserved)
++-- src/
+�   +-- assets/
+�   �   +-- new_cat_shade.mp4    # Light mode profile video
+�   �   +-- reverse_cat_shade.mp4# Dark mode profile video
+�   �   +-- verified_badge.png   # Verified checkmark (natural colour, no filter)
+�   �   +-- mail-white.png       # Mail icon for light mode Send Email btn
+�   �   +-- mail-dark.png        # Mail icon for dark mode Send Email btn
+�   �   +-- down.png             # View More arrow (light mode)
+�   �   +-- down-dark.png        # View More arrow (dark mode)
+�   �   +-- location.png
+�   �   +-- about.png
+�   �   +-- job_experience.png
+�   �   +-- tech_stack.png
+�   �   +-- facebook.png         # Contact footer Facebook icon
+�   �   +-- phone-white.png      # Contact footer phone icon
+�   �   +-- travel_tours.png
+�   �   +-- the_folio.png
+�   �   +-- bias.png
+�   �   +-- magic_leftovers1.png
+�   �   +-- magic_leftovers2.png
+�   +-- App.tsx              # Main component + all section markup
+�   +-- App.css              # Component-level styles
+�   +-- ContactModal.tsx     # Floating "Message me" button + slide-up form panel
+�   +-- ContactModal.css     # Modal + FAB styles
+�   +-- index.css            # Global reset, CSS tokens, dark/light mode vars
+�   +-- main.tsx             # React entry point
++-- .env                     # EmailJS keys + reCAPTCHA site key (not committed)
++-- index.html               # HTML shell + Google Fonts link
++-- vite.config.ts
++-- tsconfig.json
++-- tsconfig.app.json
++-- tsconfig.node.json
++-- eslint.config.js
++-- package.json
 ```
 
 ---
 
-## 🎨 Design System
+## ?? Design System
 
-All colours are defined as **CSS custom properties** on `:root` (light mode) and overridden on `:root.dark` (dark mode). Theme switching is instant — toggling the `.dark` class on `<html>` transitions all tokens at once via `transition: background 0.3s ease`.
+All colours are defined as **CSS custom properties** on `:root` (light mode) and overridden on `:root.dark` (dark mode). Theme switching is smooth � toggling the `.dark` class on `<html>` transitions all tokens via `transition: background 0.3s ease`.
 
 ### Tokens (selected)
 
@@ -73,78 +82,116 @@ All colours are defined as **CSS custom properties** on `:root` (light mode) and
 
 ---
 
-## 🗂️ Sections
+## ??? Sections
 
 ### 1. Hero
-- Profile photo with a rounded card border
-- Name row with **verified badge** icon
+- **Profile media** � layered crossfade: `new_cat_shade.mp4` (light) / `reverse_cat_shade.mp4` (dark). Each video plays from the beginning on every mode toggle and freezes on its last frame. Transition is a smooth **0.5 s opacity crossfade**.
+- Name row with **verified badge** (natural colour retained in both modes)
 - Location badge and **"Aspiring UI/UX Designer"** subtitle
-- **Send Email** `<a>` button linking to `mailto:`
+- **Send Email** button � `mail-white.png` in light mode, `mail-dark.png` in dark mode
 
 ### 2. About + Experience *(two-column grid)*
 **Left column**
-- **About** card — three-paragraph bio describing background, projects, and skills
-- **Tech Stack** card — tags grouped by *Frontend* and *Backend*
+- **About** card � scrollable bio (max-height 200 px) with custom thin scrollbar
+- **Tech Stack** card � tags grouped by *Frontend* and *Backend*
 
 **Right column**
-- **Experience** card — bulleted list of 7 role types (Business Analyst, QA, Backend Dev, Frontend Dev, UI/UX Design, Static Web Dev, Software Testing)
+- **Experience** card � scrollable list of 7 role types
 
 ### 3. View More Button
 - Centred pill button with a down-arrow icon
-- Clicking it **smooth-scrolls** to the Projects section via `scrollIntoView({ behavior: 'smooth' })`
+- `down.png` in light mode, `down-dark.png` in dark mode
+- Smooth-scrolls to the Projects section via `scrollIntoView({ behavior: 'smooth' })`
 
 ### 4. My Projects
-Four project cards displayed in a vertical stack:
+Four project cards in a vertical stack:
 
-| # | Project | Stack |
-|---|---|---|
-| 01 | J&D Amazing8 Travels and Tours | React, TypeScript, Supabase |
-| 02 | The-Folio Project | React, Supabase, TypeScript |
-| 03 | BIAS – Barangay Inquiry & Appointment System | HTML, CSS, JS, Figma |
-| 04 | MagicLeftOvers | Figma, UI/UX, Prototyping |
+| # | Project | Stack | Link |
+|---|---|---|---|
+| 01 | J&D Amazing8 Travels and Tours | React, TypeScript, Supabase | [amazing8.netlify.app](https://amazing8.netlify.app/) |
+| 02 | The-Folio Project | React, Supabase, TypeScript | � |
+| 03 | BIAS � Barangay Inquiry & Appointment System | HTML, CSS, JS, Figma | � |
+| 04 | MagicLeftOvers | Figma, UI/UX, Prototyping | � |
 
-**Project card features:**
-- Even/odd cards flip image left ↔ right (`direction: rtl` trick)
-- Multi-image cards auto-cycle screenshots every **2.5 s** with a CSS opacity crossfade
-- Hover → card lifts (`translateY(-6px)`) + accent-coloured bar sweeps in from the left
-- Each card has a unique `--accent` CSS variable colour
+**Card features:**
+- Even/odd cards flip image left ? right
+- Multi-image cards auto-cycle every **2.5 s** with opacity crossfade
+- Hover ? lifts `translateY(-6px)` + accent bar sweeps in
+- Clickable cards open external project links in a new tab
+
+### 5. Contact Modal ("Message me")
+- Fixed floating pill button (bottom-right) with a **blue pulsing glow** matching the verified badge colour (#1877F2)
+- Slides up as a panel from the bottom-right
+- **EmailJS form** with fields: Full Name, Email Address, Phone Number, Message
+- Google reCAPTCHA v2 required before sending
+- Footer contact links: phone (`tel:`), Facebook ([iammushi2089](https://www.facebook.com/iammushi2089)), email
 
 ---
 
-## ⚙️ Components
+## ?? Components
 
 ### `DarkModeToggle`
 ```tsx
 <DarkModeToggle dark={boolean} onToggle={() => void} />
 ```
-A pill-shaped toggle button. The knob slides with a spring cubic-bezier easing. The `dark` boolean is stored in `App` state and applied to `document.documentElement` via `useEffect`.
+Pill-shaped toggle. Defaults to **light mode**. Applies `.dark` to `document.documentElement` via `useEffect`.
 
 ### `ProjectCard`
 ```tsx
 <ProjectCard project={Project} index={number} />
 ```
-Renders a single project. Uses `useState` + `useEffect` + `setInterval` for the image carousel. Accepts an `index` to alternate layout direction.
+Single project card with optional `project.link` � wraps in `<a>` if set.
+
+### `ContactModal`
+```tsx
+<ContactModal />
+```
+Self-contained floating button + slide-up panel. Manages form state, reCAPTCHA token, and EmailJS send.
 
 ### `App` (default export)
-Root component. Holds the `dark` state and a `projectsRef` for the scroll target.
+Root component. Holds `dark` state (`false` = **light default**), two video refs (`lightVideoRef`, `darkVideoRef`), and `projectsRef` for scroll target.
 
 ---
 
-## 🖥️ Responsive Breakpoints
+## ??? Responsive Breakpoints
 
 | Breakpoint | Behaviour |
 |---|---|
-| `> 900px` | Two-column layout for About/Experience; project cards show image + text side-by-side |
-| `≤ 900px` | Single-column layout; project card image stacks above text |
-| `≤ 600px` | Reduced padding, smaller fonts, hero stacks vertically |
+| `> 900px` | Two-column grid for About/Experience; project cards show image + text side-by-side |
+| `= 900px` | Single-column layout; project card image stacks above text |
+| `= 600px` | Reduced padding, smaller fonts, hero stacks vertically |
 
 ---
 
-## 🏃 Getting Started
+## ?? Environment Variables
+
+Create a `.env` file in the project root (never commit this):
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+VITE_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+```
+
+### EmailJS Template Variables
+
+The template must use exactly these variable names:
+
+| Template placeholder | Value sent |
+|---|---|
+| `{{user_name}}` | Full Name field |
+| `{{user_email}}` | Email Address field |
+| `{{user_phone}}` | Phone Number field |
+| `{{message}}` | Message textarea |
+
+---
+
+## ?? Getting Started
 
 ### Prerequisites
-- Node.js ≥ 18
-- npm ≥ 9
+- Node.js = 18
+- npm = 9
 
 ### Install & Run
 
@@ -161,37 +208,40 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ### Other Scripts
 
 ```bash
-npm run build    # Type-check + production bundle → dist/
+npm run build    # Type-check + production bundle ? dist/
 npm run preview  # Serve the production build locally
 npm run lint     # Run ESLint
 ```
 
 ---
 
-## 📦 Key Dependencies
+## ?? Key Dependencies
 
 ```json
 "dependencies": {
-  "react": "^19.2.7",
-  "react-dom": "^19.2.7"
+  "react": "^19.x",
+  "react-dom": "^19.x",
+  "@emailjs/browser": "^4.x",
+  "react-google-recaptcha": "^3.x"
 },
 "devDependencies": {
-  "@vitejs/plugin-react": "^6.0.3",
-  "typescript": "~6.0.2",
-  "vite": "^8.1.1",
-  "eslint": "^10.6.0"
+  "@vitejs/plugin-react": "^6.x",
+  "typescript": "~6.x",
+  "vite": "^8.x",
+  "eslint": "^10.x"
 }
 ```
 
 ---
 
-## 📝 Notes
+## ?? Notes
 
-- All images are imported directly in `App.tsx` and bundled by Vite (content-hashed filenames in production).
-- Dark mode state is **not persisted** to `localStorage` — page refresh resets to light mode.
-- The portfolio is a **single page with no routing** — all sections live in one scrollable document.
-- SEO meta tags (`<title>`, `<meta name="description">`) are set in `index.html`.
+- All images and videos are imported in `App.tsx` / `ContactModal.tsx` and bundled by Vite (content-hashed filenames in production).
+- Dark mode state is **not persisted** to `localStorage` � page refresh resets to **light mode** (default).
+- The portfolio is a **single page with no routing** � all sections live in one scrollable document.
+- SEO meta tags are set in `index.html`.
+- The `verified_badge.png` retains its natural colour in both modes (no CSS filter applied).
 
 ---
 
-*Built by Jhon Rey · La Union, Philippines*
+*Built by Jhon Rey � La Union, Philippines*
