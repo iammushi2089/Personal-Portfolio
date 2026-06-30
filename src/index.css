@@ -1,0 +1,88 @@
+/* =============================================
+   GLOBAL RESET & DESIGN TOKENS
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Light Mode */
+  --bg-page:      #f0efef;
+  --bg-card:      #e8e7e7;
+  --bg-card-inner:#f5f4f4;
+  --border:       #d5d3d3;
+  --text-primary: #1a1a1a;
+  --text-secondary:#4a4a4a;
+  --text-muted:   #7a7a7a;
+  --badge-bg:     #1a1a1a;
+  --badge-text:   #ffffff;
+  --bullet-color: #1a1a1a;
+  --btn-bg:       #1a1a1a;
+  --btn-text:     #ffffff;
+  --toggle-track: #c8c8c8;
+  --toggle-knob:  #ffffff;
+  --icon-filter:  invert(0);
+  --tag-bg:       #1a1a1a;
+  --tag-text:     #ffffff;
+  --project-card-bg: #ffffff;
+  --project-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  --overlay-bg:   rgba(0,0,0,0.5);
+
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Mode */
+:root.dark {
+  --bg-page:      #2b2b2b;
+  --bg-card:      #3a3a3a;
+  --bg-card-inner:#444444;
+  --border:       #555555;
+  --text-primary: #f0f0f0;
+  --text-secondary:#c8c8c8;
+  --text-muted:   #999999;
+  --badge-bg:     #f0f0f0;
+  --badge-text:   #1a1a1a;
+  --bullet-color: #f0f0f0;
+  --btn-bg:       #f0f0f0;
+  --btn-text:     #1a1a1a;
+  --toggle-track: #5a9fff;
+  --toggle-knob:  #ffffff;
+  --icon-filter:  invert(1) brightness(2);
+  --tag-bg:       #f0f0f0;
+  --tag-text:     #1a1a1a;
+  --project-card-bg: #3a3a3a;
+  --project-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --overlay-bg:   rgba(0,0,0,0.65);
+}
+
+body {
+  background: var(--bg-page);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================================
+   TYPOGRAPHY
+   ============================================= */
+h1, h2, h3, h4 {
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+p {
+  color: var(--text-secondary);
+}
